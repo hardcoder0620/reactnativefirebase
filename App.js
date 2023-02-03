@@ -1,8 +1,8 @@
 import 'react-native-gesture-handler';
-import { View, Text,StatusBar } from 'react-native'
+import { View, Text, StatusBar } from 'react-native'
 import React from 'react'
 import Routes from './src/components/Routes'
-import { MD2DarkTheme as DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+import { MD3LightTheme as DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 
 const theme = {
   ...DefaultTheme,

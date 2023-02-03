@@ -6,8 +6,8 @@ import Home from '../../screens/Home';
 import About from '../../screens/About';
 import Splash from '../../screens/Splash';
 
-const Stack = createStackNavigator();
 
+const Stack = createStackNavigator();
 
 export default function Routes() {
     return (
