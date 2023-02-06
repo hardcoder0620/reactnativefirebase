@@ -3,6 +3,8 @@ import { View, Text, StatusBar } from 'react-native'
 import React from 'react'
 import Routes from './src/components/Routes'
 import { MD3LightTheme as DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+import AwesomeIcon from 'react-native-vector-icons/FontAwesome';
+
 
 const theme = {
   ...DefaultTheme,
@@ -43,7 +45,9 @@ export default function App() {
   return (
     <>
       <StatusBar backgroundColor={'white'} barStyle={'dark-content'}/>
-      <PaperProvider theme={theme}>
+      <PaperProvider theme={theme}  settings={{
+          icon: props => <AwesomeIcon {...props} />,
+        }}>
       <Routes />
       </PaperProvider>
     </>
