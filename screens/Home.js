@@ -7,8 +7,16 @@ import * as Animatable from 'react-native-animatable';
 import auth from '@react-native-firebase/auth';
 import iconM from "react-native-vector-icons/MaterialIcons"
 
+import { useSelector, useDispatch } from 'react-redux'
+import { increment, decrement,incrementByAmount } from '../store/slices/counterSlice';
+
 
 export default function Home({ navigation, route }) {
+
+  const count = useSelector((state) => state.counter.value)
+  const dispatch = useDispatch()
+
+
   const theme = useTheme()
 
 
@@ -34,7 +42,7 @@ export default function Home({ navigation, route }) {
 
   async function getData() {
     try {
-      const empCollection = await firestore().collection('employee').get();
+      const empCollection = await firestore().collection('Employee').get();
       // console.warn("empCollection._docs", empCollection._docs[0]._ref._documentPath._parts[1])
       console.warn("empCollection._docs", empCollection._docs)
       setEmpState(empCollection._docs)
@@ -45,21 +53,45 @@ export default function Home({ navigation, route }) {
 
 
   async function addItem() {
-    firestore().collection('employee').add({
-      name: name,
+    // try {
+    //   console.warn('adding')
+    //   const user = await firestore().collection('employee').add({
+    //     name: name,
+    //     age: age,
+    //   });
+    //   console.warn(user)
+    //   setName('')
+    //   setAge('')
+    //   getData()
+
+    // } catch (error) {
+    //   console.log(error)
+    // }
+
+    setName('')
+    setAge('')
+    firestore().collection('Employee').add({
       age: age,
+      name: name,
     }).then((user) => {
+      console.warn('added successfully')
       console.warn(user);
-      setName('')
-      setAge('')
       getData()
     });
   }
 
 
   async function deleteItem(id) {
+    // try {
+    //   await  firestore().collection('employee').doc(id).delete()
+    //   console.log('User deleted!');
+    //     getData()
+    // } catch (error) {
+    //   console.log(error)
+    // }
+    
     firestore()
-      .collection('employee')
+      .collection('Employee')
       .doc(id)
       .delete()
       .then(() => {
@@ -72,7 +104,7 @@ export default function Home({ navigation, route }) {
 
   async function updateitem() {
     firestore()
-      .collection('employee')
+      .collection('Employee')
       .doc(updatingid)
       .update({
         name: updateName,
@@ -96,7 +128,6 @@ export default function Home({ navigation, route }) {
         setRegEmail('')
         setRegPass('')
         console.log("user registerd", user)
-
       })
       .catch(error => {
         if (error.code === 'auth/email-already-in-use') {
@@ -152,6 +183,15 @@ export default function Home({ navigation, route }) {
             ADD ITEM
           </Button>
         </View>
+          <Button icon="plus" mode="contained" loading={false} onPress={() =>{}}>
+           {count}
+          </Button>
+          <Button icon="plus" mode="contained" loading={false} onPress={() => dispatch(increment())}>
+            ADD 
+          </Button>
+          <Button icon="plus" mode="contained" loading={false} onPress={() => dispatch(decrement())}>
+           remove
+          </Button>
       </View>
       <ScrollView style={{ padding: 10, flex: 1 }}
       >
@@ -185,7 +225,7 @@ export default function Home({ navigation, route }) {
                 </Animatable.View>
               )
             })
-            : <ActivityIndicator animatin={true} color={'purple'} size="large" />
+            : <ActivityIndicator animatin={true} color={'purple'} size="large"/>
         }
       </ScrollView>
       <Portal>

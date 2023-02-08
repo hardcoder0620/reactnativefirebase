@@ -4,6 +4,8 @@ import React from 'react'
 import Routes from './src/components/Routes'
 import { MD3LightTheme as DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import AwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import { store } from './store/store';
+import { Provider } from 'react-redux'
 
 
 const theme = {
@@ -45,11 +47,13 @@ export default function App() {
   return (
     <>
       <StatusBar backgroundColor={'white'} barStyle={'dark-content'}/>
+      <Provider store={store}>
       <PaperProvider theme={theme}  settings={{
           icon: props => <AwesomeIcon {...props} />,
         }}>
       <Routes />
       </PaperProvider>
+      </Provider>
     </>
   )
 }
